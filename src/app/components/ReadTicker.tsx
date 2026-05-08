@@ -7,10 +7,15 @@ interface PlateCard {
   state: string;
   camera: "A" | "B";
   vehicle: string;
+  confidence: number;
   isNew: boolean;
 }
 
-export function ReadTicker() {
+interface ReadTickerProps {
+  onNewRead?: () => void;
+}
+
+export function ReadTicker({ onNewRead }: ReadTickerProps) {
   const [plates, setPlates] = useState<PlateCard[]>(generateInitialPlates());
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +34,7 @@ export function ReadTicker() {
           "Red Nissan",
           "Gray Hyundai",
         ][Math.floor(Math.random() * 6)],
+        confidence: Math.round((94 + Math.random() * 5.9) * 10) / 10,
         isNew: true,
       };
 
@@ -37,11 +43,12 @@ export function ReadTicker() {
         return updated;
       });
 
-      // Scroll to start
+      onNewRead?.();
+
       if (scrollRef.current) {
         scrollRef.current.scrollLeft = 0;
       }
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);
@@ -110,6 +117,14 @@ function PlateCard({ plate }: { plate: PlateCard }) {
 
       {/* Vehicle */}
       <div className="text-[10px] text-[var(--text-2)] truncate">{plate.vehicle}</div>
+
+      {/* Confidence */}
+      <div
+        className="font-mono text-[9px] font-semibold mt-0.5"
+        style={{ color: plate.confidence >= 99 ? "var(--good)" : "var(--text-2)" }}
+      >
+        {plate.confidence}%
+      </div>
     </motion.div>
   );
 }
@@ -128,6 +143,7 @@ function generateInitialPlates(): PlateCard[] {
       "Red Nissan",
       "Gray Hyundai",
     ][Math.floor(Math.random() * 6)],
+    confidence: Math.round((94 + Math.random() * 5.9) * 10) / 10,
     isNew: false,
   }));
 }

@@ -110,7 +110,11 @@ const activityData: ActivityRow[] = [
   },
 ];
 
-export function ActivitySection() {
+interface ActivitySectionProps {
+  onTriggerHit?: () => void;
+}
+
+export function ActivitySection({ onTriggerHit }: ActivitySectionProps) {
   return (
     <div className="flex-1 flex flex-col bg-[var(--bg-1)] overflow-hidden">
       {/* Section header */}
@@ -137,16 +141,17 @@ export function ActivitySection() {
       {/* Activity list */}
       <div className="flex-1 overflow-y-auto px-2 py-1.5 scrollbar-thin">
         {activityData.map((row, idx) => (
-          <ActivityRowItem key={idx} row={row} />
+          <ActivityRowItem key={idx} row={row} onTriggerHit={row.isHit ? onTriggerHit : undefined} />
         ))}
       </div>
     </div>
   );
 }
 
-function ActivityRowItem({ row }: { row: ActivityRow }) {
+function ActivityRowItem({ row, onTriggerHit }: { row: ActivityRow; onTriggerHit?: () => void }) {
   return (
     <div
+      onClick={onTriggerHit}
       className={`grid grid-cols-[56px_1fr_48px_52px] gap-3 px-2.5 py-2.5 rounded-md border-l-2 transition-colors cursor-pointer ${
         row.isHit
           ? "border-l-[var(--hit)] bg-[rgba(255,51,85,.06)] hover:bg-[rgba(255,51,85,.1)]"

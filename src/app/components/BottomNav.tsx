@@ -1,83 +1,82 @@
-import { Camera, Search, List, Map, Settings, Shield } from "lucide-react";
+import { Radar, BellDot, Search, Radio, MapPin } from "lucide-react";
 import { motion } from "motion/react";
 
-export function BottomNav() {
-  const navItems = [
-    { icon: Camera, label: "CAMERAS", active: true },
-    { icon: List, label: "DETECTIONS", active: false },
-    { icon: Search, label: "SEARCH", active: false },
-    { icon: Map, label: "MAP", active: false },
-    { icon: Shield, label: "HOTLIST", active: false },
-    { icon: Settings, label: "SYSTEM", active: false },
-  ];
+const NAV_ITEMS = [
+  { id: "patrol",   icon: Radar,   label: "PATROL"   },
+  { id: "hits",     icon: BellDot, label: "HITS"     },
+  { id: "lookup",   icon: Search,  label: "LOOKUP"   },
+  { id: "bolo",     icon: Radio,   label: "BOLO"     },
+  { id: "stakeout", icon: MapPin,  label: "STAKEOUT" },
+] as const;
 
-  return (
-    <div className="h-16 border-t border-[var(--line-2)] bg-[var(--bg-1)]/90 backdrop-blur-sm px-6">
-      <div className="h-full flex items-center justify-between">
-        {/* Navigation items */}
-        <div className="flex items-center gap-2">
-          {navItems.map((item, idx) => (
-            <NavButton
-              key={idx}
-              icon={item.icon}
-              label={item.label}
-              active={item.active}
-            />
-          ))}
-        </div>
+type TabId = (typeof NAV_ITEMS)[number]["id"];
 
-        {/* Right side controls */}
-        <div className="flex items-center gap-3">
-          <button className="px-5 py-2.5 border border-[var(--line-2)] hover:border-[var(--accent)] hover:bg-[var(--bg-3)] transition-colors uppercase tracking-[.14em] text-[11px] text-[var(--text-1)] font-semibold">
-            EXPORT DATA
-          </button>
-          <button className="px-5 py-2.5 bg-[var(--hit)] hover:bg-[var(--hit)]/90 transition-colors uppercase tracking-[.14em] text-[11px] text-white font-semibold">
-            EMERGENCY
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+interface BottomNavProps {
+  activeTab: TabId;
+  onTabChange: (id: TabId) => void;
 }
 
-function NavButton({
-  icon: Icon,
-  label,
-  active,
-}: {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  label: string;
-  active: boolean;
-}) {
-  return (
-    <button
-      className={`relative px-4 py-2.5 border transition-all ${
-        active
-          ? "border-[var(--accent)] bg-[var(--accent)]/10"
-          : "border-[var(--line)] hover:border-[var(--line-2)] hover:bg-[var(--bg-2)]"
-      }`}
-    >
-      <div className="flex items-center gap-2">
-        <Icon
-          size={16}
-          className={active ? "text-[var(--accent)]" : "text-[var(--text-2)]"}
-        />
-        <span
-          className={`text-[10px] uppercase tracking-[.14em] font-semibold ${
-            active ? "text-[var(--accent)]" : "text-[var(--text-2)]"
-          }`}
-        >
-          {label}
-        </span>
-      </div>
+export type { TabId };
 
-      {/* Active indicator */}
-      {active && (
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--accent)]"
-          layoutId="activeNav"
-        />
-      )}
-    </button>
+export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
+  return (
+    <div
+      className="relative h-16 flex"
+      style={{
+        background: "linear-gradient(to bottom, var(--bg-1), var(--bg-0))",
+        borderTop: "1px solid var(--line)",
+      }}
+    >
+      {NAV_ITEMS.map((item, idx) => {
+        const isActive = activeTab === item.id;
+        const Icon = item.icon;
+
+        return (
+          <button
+            key={item.id}
+            onClick={() => onTabChange(item.id)}
+            className="relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors group"
+            style={{
+              borderRight: idx < NAV_ITEMS.length - 1 ? "1px solid var(--line)" : "none",
+              color: isActive ? "var(--accent)" : "var(--text-3)",
+            }}
+            onMouseEnter={(e) => {
+              if (!isActive) (e.currentTarget as HTMLElement).style.color = "var(--text-1)";
+            }}
+            onMouseLeave={(e) => {
+              if (!isActive) (e.currentTarget as HTMLElement).style.color = "var(--text-3)";
+            }}
+          >
+            {/* Top accent bar — active only */}
+            {isActive && (
+              <motion.div
+                layoutId="nav-accent-bar"
+                className="absolute top-0 left-1/2 -translate-x-1/2 h-[2px]"
+                style={{
+                  width: "60%",
+                  backgroundColor: "var(--accent)",
+                  boxShadow: "0 0 12px var(--accent)",
+                }}
+                transition={{ type: "spring", stiffness: 500, damping: 40 }}
+              />
+            )}
+
+            <Icon size={20} strokeWidth={1.5} />
+
+            <span
+              style={{
+                fontFamily: "'Geist Mono', monospace",
+                fontSize: "10px",
+                fontWeight: 600,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+              }}
+            >
+              {item.label}
+            </span>
+          </button>
+        );
+      })}
+    </div>
   );
 }

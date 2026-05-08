@@ -1,12 +1,22 @@
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
+import { Volume2, Volume1, VolumeX } from "lucide-react";
+
+export type MuteState = "all" | "high" | "muted";
 
 interface TopBarProps {
   scanCount: number;
   hitCount: number;
+  muteState: MuteState;
+  onMuteToggle: () => void;
 }
 
-export function TopBar({ scanCount, hitCount }: TopBarProps) {
+export function TopBar({ scanCount, hitCount, muteState, onMuteToggle }: TopBarProps) {
+  const muteConfig = {
+    all:   { Icon: Volume2,  label: "ALL ALERTS",  color: "var(--text-2)" },
+    high:  { Icon: Volume1,  label: "HIGH ONLY",   color: "var(--amber)"  },
+    muted: { Icon: VolumeX,  label: "MUTED",       color: "var(--hit)"    },
+  }[muteState];
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -91,6 +101,18 @@ export function TopBar({ scanCount, hitCount }: TopBarProps) {
             borderLeft
           />
         </div>
+
+        {/* Mute toggle */}
+        <button
+          onClick={onMuteToggle}
+          className="border-l border-[var(--line)] pl-5 flex items-center gap-1.5 transition-colors"
+          style={{ color: muteConfig.color, background: "none", border: "none", borderLeft: "1px solid var(--line)", paddingLeft: 20, cursor: "pointer" }}
+        >
+          <muteConfig.Icon size={13} />
+          <span className="font-mono text-[9px] font-semibold tracking-[.14em] uppercase">
+            {muteConfig.label}
+          </span>
+        </button>
 
         {/* Clock */}
         <div className="border-l border-[var(--line)] pl-6">
