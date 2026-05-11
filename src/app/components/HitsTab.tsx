@@ -15,7 +15,6 @@ interface Hit {
   state: string;
   vehicle: string;
   camera: "A" | "B";
-  confidence: number;
   reason: string;
   priority: "HIGH" | "MED" | "LOW";
   status: HitStatus;
@@ -25,7 +24,7 @@ interface Hit {
 const HITS_DATA: Hit[] = [
   {
     id: 1, time: "14:23:45", plate: "JLW8931", state: "TX", vehicle: "Silver Ford F-150",
-    camera: "A", confidence: 99.7, reason: "STOLEN VEHICLE", priority: "HIGH", status: "pending",
+    camera: "A", reason: "STOLEN VEHICLE", priority: "HIGH", status: "pending",
     safetyFlags: [
       { label: "ARMED & DANGEROUS", variant: "hit" },
       { label: "PRIOR · RESISTING", variant: "amber" },
@@ -34,7 +33,7 @@ const HITS_DATA: Hit[] = [
   },
   {
     id: 2, time: "12:44:18", plate: "ABC1234", state: "TX", vehicle: "Black GMC Sierra",
-    camera: "B", confidence: 98.2, reason: "WANTED FELONY", priority: "HIGH", status: "confirmed",
+    camera: "B", reason: "WANTED FELONY", priority: "HIGH", status: "confirmed",
     safetyFlags: [
       { label: "VIOLENT FELONY", variant: "hit" },
       { label: "DASH-CAM ON", variant: "accent" },
@@ -42,14 +41,14 @@ const HITS_DATA: Hit[] = [
   },
   {
     id: 3, time: "11:15:33", plate: "XYZ9876", state: "OK", vehicle: "Red Dodge Challenger",
-    camera: "A", confidence: 96.5, reason: "STOLEN VEHICLE", priority: "MED", status: "wrong_state",
+    camera: "A", reason: "STOLEN VEHICLE", priority: "MED", status: "wrong_state",
     safetyFlags: [
       { label: "DASH-CAM ON", variant: "accent" },
     ],
   },
   {
     id: 4, time: "09:52:07", plate: "DEF5678", state: "TX", vehicle: "White Toyota Tacoma",
-    camera: "B", confidence: 97.8, reason: "BOLO · FELONY STOP", priority: "MED", status: "dismissed",
+    camera: "B", reason: "WATCH · FELONY STOP", priority: "MED", status: "dismissed",
     safetyFlags: [
       { label: "PRIOR RECORD", variant: "amber" },
       { label: "DASH-CAM ON", variant: "accent" },
@@ -82,7 +81,7 @@ export function HitsTab({ onTriggerHit }: HitsTabProps) {
     <div style={{ height: "100%", display: "flex", flexDirection: "column", background: "var(--bg-0)" }}>
       <div style={{ padding: "14px 24px", borderBottom: "1px solid var(--line)", background: "var(--bg-1)", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-1)" }}>Hotlist Hits</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-0)" }}>Hotlist Hits</span>
           <span style={{ background: "rgba(255,51,85,.1)", border: "1px solid rgba(255,51,85,.3)", color: "var(--hit)", fontFamily: MONO, fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3 }}>
             {HITS_DATA.length} HITS · SHIFT
           </span>
@@ -146,7 +145,6 @@ function HitCard({ hit, status, expanded, onExpand, onTriggerHit, onStatusChange
         </div>
 
         <div style={{ fontFamily: MONO, fontSize: 10, color: "var(--text-3)" }}>CAM {hit.camera}</div>
-        <div style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: hit.confidence >= 99 ? "var(--good)" : "var(--text-1)" }}>{hit.confidence}%</div>
         <div style={{ color: "var(--text-3)" }}>{expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}</div>
       </div>
 
@@ -155,8 +153,8 @@ function HitCard({ hit, status, expanded, onExpand, onTriggerHit, onStatusChange
           {/* Side-by-side plate verification — differentiator #1 */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             {[
-              { heading: "Captured · CAM A", tag: "▶ LIVE", tagColor: "var(--accent)", border: "var(--hit)", note: `${hit.confidence}% confidence` },
-              { heading: "NCIC Archive · 04/28", tag: "NCIC", tagColor: "var(--text-2)", border: "var(--line-2)", note: "✓ EXACT MATCH" },
+              { heading: "Captured · CAM A", tag: "▶ LIVE", tagColor: "var(--accent)", border: "var(--hit)", note: "Plate Captured Live" },
+              { heading: "NCIC (Natl. Crime Info.) Archive · 04/28", tag: "NCIC", tagColor: "var(--text-2)", border: "var(--line-2)", note: "✓ EXACT MATCH" },
             ].map(({ heading, tag, tagColor, border, note }) => (
               <div key={heading} style={{ border: "1px solid var(--line)", background: "var(--bg-1)", padding: 12 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
@@ -195,10 +193,10 @@ function HitCard({ hit, status, expanded, onExpand, onTriggerHit, onStatusChange
               <button onClick={() => { onStatusChange("confirmed"); onTriggerHit?.(); }} style={{ padding: "9px 12px", background: "var(--hit)", border: "none", color: "white", fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
                 Confirm Hit
               </button>
-              <button onClick={() => onStatusChange("wrong_state")} style={{ padding: "9px 12px", background: "var(--bg-3)", border: "1px solid var(--line-2)", color: "var(--text-1)", fontFamily: MONO, fontSize: 10, fontWeight: 600, textTransform: "uppercase", cursor: "pointer" }}>
+              <button onClick={() => onStatusChange("wrong_state")} style={{ padding: "9px 12px", background: "var(--bg-3)", border: "1px solid var(--line-2)", color: "var(--text-0)", fontFamily: MONO, fontSize: 10, fontWeight: 600, textTransform: "uppercase", cursor: "pointer" }}>
                 Wrong State
               </button>
-              <button onClick={() => onStatusChange("dismissed")} style={{ padding: "9px 12px", background: "var(--bg-3)", border: "1px solid var(--line-2)", color: "var(--text-1)", fontFamily: MONO, fontSize: 10, fontWeight: 600, textTransform: "uppercase", cursor: "pointer" }}>
+              <button onClick={() => onStatusChange("dismissed")} style={{ padding: "9px 12px", background: "var(--bg-3)", border: "1px solid var(--line-2)", color: "var(--text-0)", fontFamily: MONO, fontSize: 10, fontWeight: 600, textTransform: "uppercase", cursor: "pointer" }}>
                 Dismiss
               </button>
             </div>

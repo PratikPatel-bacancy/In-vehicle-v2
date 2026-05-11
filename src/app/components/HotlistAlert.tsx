@@ -145,7 +145,7 @@ function AlertHeader({
             ▶ LIVE HIT
           </motion.span>
           <span style={{ fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--hit)" }}>
-            FBI · NCIC HOTLIST MATCH
+            FBI · NCIC (Natl. Crime Info. Center) HOTLIST MATCH
           </span>
         </div>
 
@@ -157,7 +157,7 @@ function AlertHeader({
 
         {/* Meta */}
         <div style={{ fontFamily: MONO, fontSize: 12, color: "var(--text-2)" }}>
-          Detected 14:23:45 · CAM A (Front) · 99.7% confidence · Reported stolen 04/28/2026 · Tarrant County SO
+          Detected 14:23:45 · CAM A (Front) · Reported stolen 04/28/2026 · Tarrant County SO
         </div>
       </div>
 
@@ -233,7 +233,6 @@ function CapturedColumn() {
       <ColFooter cells={[
         { label: "TIME", value: "14:23:45" },
         { label: "CAMERA", value: "A · FRONT" },
-        { label: "CONFIDENCE", value: "99.7%", color: "var(--good)" },
       ]} />
     </div>
   );
@@ -244,7 +243,7 @@ function CapturedColumn() {
 function HotlistColumn() {
   return (
     <div style={{ display: "flex", flexDirection: "column", borderRight: "1px solid rgba(255,51,85,.15)", overflow: "hidden" }}>
-      <ColHeader label="Hotlist Record · Verify" tag="NCIC · 04/28" tagColor="hit" />
+      <ColHeader label="Hotlist Record · Verify" tag="NCIC (Crime DB) · 04/28" tagColor="hit" />
 
       <div style={{ flex: 1, padding: 20, display: "flex", flexDirection: "column", minHeight: 0 }}>
         <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
@@ -283,7 +282,7 @@ function BriefingColumn({ onConfirm, onDismissWithReason }: { onConfirm: () => v
   return (
     <div style={{ display: "flex", flexDirection: "column", overflow: "hidden", background: "var(--bg-1)" }}>
       <div style={{ padding: "10px 20px", borderBottom: "1px solid var(--line)", background: "var(--bg-2)", flexShrink: 0 }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-1)" }}>
+        <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-0)" }}>
           Vehicle & Officer Briefing
         </span>
       </div>
@@ -303,9 +302,9 @@ function BriefingColumn({ onConfirm, onDismissWithReason }: { onConfirm: () => v
         {/* Legal Notice */}
         <div style={{ background: "rgba(255,170,0,.06)", borderLeft: "3px solid var(--amber)", padding: "10px 12px", borderTopRightRadius: 4 }}>
           <div style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--amber)", marginBottom: 6 }}>
-            ⚠ NCIC VERIFICATION REQUIRED
+            ⚠ NCIC (Natl. Crime Info. Center) VERIFICATION REQUIRED
           </div>
-          <div style={{ fontSize: 11, color: "var(--text-1)", lineHeight: 1.5 }}>
+          <div style={{ fontSize: 11, color: "var(--text-0)", lineHeight: 1.5 }}>
             ALPR alert alone is not basis for action. Confirm hit via dispatch / NCIC before stop. Visually verify plate & state match (auto-checked above).
           </div>
         </div>
@@ -333,7 +332,7 @@ function BriefingColumn({ onConfirm, onDismissWithReason }: { onConfirm: () => v
         <BriefSection title="Hotlist Source">
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {([
-              ["Database", "NCIC · STLN", true, undefined],
+              ["Database", "NCIC (Natl. Crime Info.) · STLN", true, undefined],
               ["Priority", "HIGH", false, "var(--hit)"],
               ["Originator", "Tarrant Co. SO", false, undefined],
               ["Case #", "2026-04-7731", true, undefined],
@@ -426,7 +425,7 @@ function PIPCamera() {
             transition={{ duration: 0.6, repeat: Infinity }}
             style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--hit)" }}
           />
-          <span style={{ fontFamily: MONO, fontSize: 9, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-1)" }}>
+          <span style={{ fontFamily: MONO, fontSize: 9, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-0)" }}>
             TRACKING · CAM A
           </span>
         </div>
@@ -439,8 +438,8 @@ function PIPCamera() {
 
 function ConfirmedOverlay({ plate, onDismiss }: { plate: string; onDismiss: () => void }) {
   const actions = [
-    "CAD entry created · Spillman #2026-44782",
-    "Body-worn camera marked · Axon Body 4",
+    "CAD (Computer-Aided Dispatch) entry created · Spillman #2026-44782",
+    "BWC (Body-Worn Camera) marked · Axon Body 4",
     "Unit status → INVESTIGATING",
     "Plate text copied to clipboard",
     "Adjacent units (U-04, U-07) alerted within 2mi",
@@ -476,7 +475,7 @@ function ConfirmedOverlay({ plate, onDismiss }: { plate: string; onDismiss: () =
         <div style={{ fontFamily: MONO, fontSize: 13, color: "var(--text-2)", textAlign: "center" }}>
           Unit <b style={{ color: "var(--accent)" }}>01</b> intercepting ·{" "}
           Plate <b style={{ color: "var(--accent)" }}>{plate}</b> ·{" "}
-          NCIC <b style={{ color: "var(--accent)" }}>STLN</b>
+          NCIC (Natl. Crime Info. Center) <b style={{ color: "var(--accent)" }}>STLN (Stolen)</b>
         </div>
 
         {/* Image 5: Body-cam thumbnail */}
@@ -493,7 +492,7 @@ function ConfirmedOverlay({ plate, onDismiss }: { plate: string; onDismiss: () =
               transition={{ duration: 0.6, repeat: Infinity }}
               style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--hit)" }}
             />
-            <span style={{ fontFamily: MONO, fontSize: 8, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-1)" }}>
+            <span style={{ fontFamily: MONO, fontSize: 8, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-0)" }}>
               BODY CAM · UNIT 01
             </span>
           </div>
@@ -518,7 +517,7 @@ function ConfirmedOverlay({ plate, onDismiss }: { plate: string; onDismiss: () =
               >
                 <Check size={14} style={{ color: "var(--good)", flexShrink: 0 }} />
               </motion.div>
-              <span style={{ fontFamily: MONO, fontSize: 12, color: "var(--text-1)" }}>{action}</span>
+              <span style={{ fontFamily: MONO, fontSize: 12, color: "var(--text-0)" }}>{action}</span>
             </motion.div>
           ))}
         </div>
@@ -528,7 +527,7 @@ function ConfirmedOverlay({ plate, onDismiss }: { plate: string; onDismiss: () =
           style={{
             marginTop: 8, minWidth: 200, padding: "12px 24px",
             background: "var(--bg-3)", border: "1px solid var(--line-2)",
-            color: "var(--text-1)", fontFamily: MONO, fontSize: 11, fontWeight: 600,
+            color: "var(--text-0)", fontFamily: MONO, fontSize: 11, fontWeight: 600,
             letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer",
           }}
         >
@@ -576,7 +575,7 @@ function DismissedOverlay({ reason, plate, onDismiss }: { reason: string; plate:
         <div style={{ fontSize: 28, fontWeight: 700, color: "var(--text-0)", lineHeight: 1.2 }}>{title}</div>
 
         <div style={{ fontFamily: MONO, fontSize: 13, color: "var(--text-2)" }}>
-          Plate <b style={{ color: "var(--text-1)" }}>{plate}</b> · Logged as{" "}
+          Plate <b style={{ color: "var(--text-0)" }}>{plate}</b> · Logged as{" "}
           <b style={{ color: "var(--amber)" }}>{reason}</b>
         </div>
 
@@ -600,7 +599,7 @@ function DismissedOverlay({ reason, plate, onDismiss }: { reason: string; plate:
           style={{
             marginTop: 8, minWidth: 200, padding: "12px 24px",
             background: "var(--bg-3)", border: "1px solid var(--line-2)",
-            color: "var(--text-1)", fontFamily: MONO, fontSize: 11, fontWeight: 600,
+            color: "var(--text-0)", fontFamily: MONO, fontSize: 11, fontWeight: 600,
             letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer",
           }}
         >
@@ -617,7 +616,7 @@ function ColHeader({ label, tag, tagColor }: { label: string; tag: string; tagCo
   const isAccent = tagColor === "accent";
   return (
     <div style={{ padding: "10px 18px", borderBottom: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "var(--bg-2)", flexShrink: 0 }}>
-      <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-1)" }}>{label}</span>
+      <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-0)" }}>{label}</span>
       <span style={{
         fontFamily: MONO, fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase",
         color: isAccent ? "var(--accent)" : "var(--hit)",
@@ -698,12 +697,12 @@ function SecondaryBtn({ label, full, onClick }: { label: string; full?: boolean;
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLElement).style.borderColor = "var(--line-2)";
-        (e.currentTarget as HTMLElement).style.color = "var(--text-1)";
+        (e.currentTarget as HTMLElement).style.color = "var(--text-0)";
       }}
       style={{
         width: full ? "100%" : undefined, padding: "9px 12px",
         background: "var(--bg-3)", border: "1px solid var(--line-2)",
-        color: "var(--text-1)", fontFamily: MONO, fontSize: 10, fontWeight: 600,
+        color: "var(--text-0)", fontFamily: MONO, fontSize: 10, fontWeight: 600,
         letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer",
         transition: "border-color .15s, color .15s",
       }}

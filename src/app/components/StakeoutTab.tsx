@@ -12,7 +12,7 @@ function randomPlate() {
 }
 
 interface Read {
-  id: string; time: string; plate: string; state: string; camera: "A" | "B"; confidence: number;
+  id: string; time: string; plate: string; state: string; camera: "A" | "B";
 }
 
 export function StakeoutTab() {
@@ -36,7 +36,6 @@ export function StakeoutTab() {
         plate: randomPlate(),
         state: STATES[~~(Math.random() * STATES.length)],
         camera: Math.random() > 0.5 ? "A" : "B",
-        confidence: Math.round(950 + Math.random() * 49) / 10,
       }, ...prev].slice(0, 60));
     }, 2200);
     return () => clearInterval(t);
@@ -54,7 +53,7 @@ export function StakeoutTab() {
     <div style={{ height: "100%", display: "flex", flexDirection: "column", background: "var(--bg-0)" }}>
       {/* Header */}
       <div style={{ padding: "14px 24px", borderBottom: "1px solid var(--line)", background: "var(--bg-1)", flexShrink: 0 }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-1)" }}>
+        <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-0)" }}>
           Stakeout Mode · Fixed ALPR
         </span>
       </div>
@@ -92,7 +91,7 @@ export function StakeoutTab() {
               >
                 <Stat label="Elapsed" value={fmt(elapsed)} color="var(--accent)" />
                 <Stat label="Reads" value={reads.length.toString()} color="var(--text-0)" />
-                <Stat label="Cameras" value="A + B" color="var(--text-1)" />
+                <Stat label="Cameras" value="A + B" color="var(--text-0)" />
                 <Stat label="GPS" value="32.9226° N" mono color="var(--text-2)" />
               </motion.div>
             ) : (
@@ -117,7 +116,7 @@ export function StakeoutTab() {
             style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 16 }}
           >
             <span style={{ fontFamily: MONO, fontSize: 9, color: "var(--text-3)", letterSpacing: "0.12em", textTransform: "uppercase", flexShrink: 0 }}>
-              Geofence radius: <span style={{ color: "var(--text-1)" }}>{radius} mi</span>
+              Geofence radius: <span style={{ color: "var(--text-0)" }}>{radius} mi</span>
             </span>
             <input
               type="range" min="0.1" max="2" step="0.1" value={radius}
@@ -139,8 +138,8 @@ export function StakeoutTab() {
       {/* Reads table */}
       {active ? (
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "80px 1fr 48px 56px 64px", gap: 12, padding: "8px 24px", borderBottom: "1px solid var(--line)", background: "var(--bg-2)", flexShrink: 0 }}>
-            {["TIME", "PLATE", "ST", "CAM", "CONF"].map((h) => (
+          <div style={{ display: "grid", gridTemplateColumns: "80px 1fr 48px 56px", gap: 12, padding: "8px 24px", borderBottom: "1px solid var(--line)", background: "var(--bg-2)", flexShrink: 0 }}>
+            {["TIME", "PLATE", "ST", "CAM"].map((h) => (
               <div key={h} style={{ fontFamily: MONO, fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-3)" }}>{h}</div>
             ))}
           </div>
@@ -153,15 +152,12 @@ export function StakeoutTab() {
                   initial={{ opacity: 0, backgroundColor: "rgba(0,229,212,.12)" }}
                   animate={{ opacity: 1, backgroundColor: "transparent" }}
                   transition={{ duration: 0.8 }}
-                  style={{ display: "grid", gridTemplateColumns: "80px 1fr 48px 56px 64px", gap: 12, padding: "10px 24px", borderBottom: "1px solid var(--line)" }}
+                  style={{ display: "grid", gridTemplateColumns: "80px 1fr 48px 56px", gap: 12, padding: "10px 24px", borderBottom: "1px solid var(--line)" }}
                 >
                   <div style={{ fontFamily: MONO, fontSize: 11, color: "var(--text-2)" }}>{r.time}</div>
                   <div style={{ fontFamily: MONO, fontSize: 13, fontWeight: 700, color: "var(--text-0)" }}>{r.plate}</div>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: "var(--text-3)" }}>{r.state}</div>
                   <div style={{ fontFamily: MONO, fontSize: 10, color: "var(--accent)" }}>CAM {r.camera}</div>
-                  <div style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: r.confidence >= 99 ? "var(--good)" : "var(--text-1)" }}>
-                    {r.confidence}%
-                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>

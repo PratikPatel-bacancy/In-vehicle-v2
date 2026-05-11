@@ -7,7 +7,6 @@ interface PlateCard {
   state: string;
   camera: "A" | "B";
   vehicle: string;
-  confidence: number;
   isNew: boolean;
 }
 
@@ -34,7 +33,6 @@ export function ReadTicker({ onNewRead }: ReadTickerProps) {
           "Red Nissan",
           "Gray Hyundai",
         ][Math.floor(Math.random() * 6)],
-        confidence: Math.round((94 + Math.random() * 5.9) * 10) / 10,
         isNew: true,
       };
 
@@ -66,8 +64,8 @@ export function ReadTicker({ onNewRead }: ReadTickerProps) {
           </span>
         </div>
         <div className="font-mono text-[10px] text-[var(--text-3)]">
-          Avg session: <span className="font-semibold text-[var(--text-1)]">52 plates / min</span> ·
-          Last 60s: <span className="font-semibold text-[var(--text-1)]">47</span>
+          Avg session: <span className="font-semibold text-[var(--text-0)]">52 plates / min</span> ·
+          Last 60s: <span className="font-semibold text-[var(--text-0)]">47</span>
         </div>
       </div>
 
@@ -118,13 +116,6 @@ function PlateCard({ plate }: { plate: PlateCard }) {
       {/* Vehicle */}
       <div className="text-[10px] text-[var(--text-2)] truncate">{plate.vehicle}</div>
 
-      {/* Confidence */}
-      <div
-        className="font-mono text-[9px] font-semibold mt-0.5"
-        style={{ color: plate.confidence >= 99 ? "var(--good)" : "var(--text-2)" }}
-      >
-        {plate.confidence}%
-      </div>
     </motion.div>
   );
 }
@@ -143,7 +134,6 @@ function generateInitialPlates(): PlateCard[] {
       "Red Nissan",
       "Gray Hyundai",
     ][Math.floor(Math.random() * 6)],
-    confidence: Math.round((94 + Math.random() * 5.9) * 10) / 10,
     isNew: false,
   }));
 }

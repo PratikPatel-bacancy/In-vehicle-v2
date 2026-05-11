@@ -36,8 +36,8 @@ export function StatusRail() {
       <StatusItem label="CAM A · FRONT" value="120fps" status="good" />
       <StatusItem label="CAM B · REAR" value="120fps" status="good" />
       <StatusItem label="LTE" value="−68 dBm" status="good" />
-      <StatusItem label="CAD" value="Spillman · OK" status="good" />
-      <StatusItem label="NCIC SYNC" value="02m ago" status="good" />
+      <StatusItem label="CAD · Dispatch" value="Spillman · OK" status="good" />
+      <StatusItem label="NCIC · Crime DB" value="02m ago" status="good" />
 
       {/* Spacer */}
       <div className="flex-1" />

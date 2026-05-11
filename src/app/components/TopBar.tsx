@@ -116,7 +116,7 @@ export function TopBar({ scanCount, hitCount, muteState, onMuteToggle }: TopBarP
 
         {/* Clock */}
         <div className="border-l border-[var(--line)] pl-6">
-          <span className="font-mono text-[13px] text-[var(--text-1)]">
+          <span className="font-mono text-[13px] text-[var(--text-0)]">
             {formatDateTime(currentTime)}
           </span>
         </div>

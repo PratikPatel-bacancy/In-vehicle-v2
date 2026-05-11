@@ -8,13 +8,13 @@ const COLORS     = ["Any", "White", "Black", "Silver", "Gray", "Red", "Blue", "G
 const BODY_TYPES = ["Any", "Pickup", "SUV", "Sedan", "Coupe", "Van", "Truck"];
 
 interface Result {
-  plate: string; state: string; vehicle: string; confidence: number; camera: "A" | "B"; time: string;
+  plate: string; state: string; vehicle: string; camera: "A" | "B"; time: string;
 }
 
 const MOCK_RESULTS: Result[] = [
-  { plate: "JLW8931", state: "TX", vehicle: "Silver Ford F-150 · 2014", confidence: 99.7, camera: "A", time: "14:23:45" },
-  { plate: "JLW8931", state: "TX", vehicle: "Silver Ford F-150 · 2014", confidence: 98.9, camera: "A", time: "14:22:11" },
-  { plate: "JLW8931", state: "TX", vehicle: "Silver Ford F-150 · 2014", confidence: 97.3, camera: "B", time: "14:19:04" },
+  { plate: "JLW8931", state: "TX", vehicle: "Silver Ford F-150 · 2014", camera: "A", time: "14:23:45" },
+  { plate: "JLW8931", state: "TX", vehicle: "Silver Ford F-150 · 2014", camera: "A", time: "14:22:11" },
+  { plate: "JLW8931", state: "TX", vehicle: "Silver Ford F-150 · 2014", camera: "B", time: "14:19:04" },
 ];
 
 export function LookupTab() {
@@ -38,7 +38,7 @@ export function LookupTab() {
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", background: "var(--bg-0)" }}>
       <div style={{ padding: "14px 24px", borderBottom: "1px solid var(--line)", background: "var(--bg-1)", flexShrink: 0 }}>
-        <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-1)" }}>
+        <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-0)" }}>
           Manual Plate Lookup
         </span>
       </div>
@@ -96,7 +96,7 @@ export function LookupTab() {
             </div>
             <div>
               <div style={{ fontFamily: MONO, fontSize: 9, color: "var(--text-3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>
-                Radius from unit: <span style={{ color: "var(--text-1)" }}>{radius} mi</span>
+                Radius from unit: <span style={{ color: "var(--text-0)" }}>{radius} mi</span>
               </div>
               <input
                 type="range" min="0.5" max="10" step="0.5" value={radius}
@@ -120,13 +120,13 @@ export function LookupTab() {
               </div>
             ) : (
               <div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 90px 52px 56px 64px", gap: 12, padding: "6px 0", borderBottom: "1px solid var(--line)", marginBottom: 4 }}>
-                  {["PLATE / VEHICLE", "TIME", "STATE", "CAM", "CONF"].map((h) => (
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 90px 52px 56px", gap: 12, padding: "6px 0", borderBottom: "1px solid var(--line)", marginBottom: 4 }}>
+                  {["PLATE / VEHICLE", "TIME", "STATE", "CAM"].map((h) => (
                     <div key={h} style={{ fontFamily: MONO, fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-3)" }}>{h}</div>
                   ))}
                 </div>
                 {results.map((r, i) => (
-                  <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 90px 52px 56px 64px", gap: 12, padding: "10px 0", borderBottom: i < results.length - 1 ? "1px solid var(--line)" : "none", alignItems: "center" }}>
+                  <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 90px 52px 56px", gap: 12, padding: "10px 0", borderBottom: i < results.length - 1 ? "1px solid var(--line)" : "none", alignItems: "center" }}>
                     <div>
                       <div style={{ fontFamily: MONO, fontSize: 13, fontWeight: 700, color: "var(--text-0)", marginBottom: 2 }}>{r.plate}</div>
                       <div style={{ fontSize: 11, color: "var(--text-2)" }}>{r.vehicle}</div>
@@ -134,7 +134,6 @@ export function LookupTab() {
                     <div style={{ fontFamily: MONO, fontSize: 11, color: "var(--text-2)" }}>{r.time}</div>
                     <div style={{ fontFamily: MONO, fontSize: 10, color: "var(--text-2)" }}>{r.state}</div>
                     <div style={{ fontFamily: MONO, fontSize: 10, color: "var(--accent)" }}>CAM {r.camera}</div>
-                    <div style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: r.confidence >= 99 ? "var(--good)" : "var(--text-1)" }}>{r.confidence}%</div>
                   </div>
                 ))}
               </div>

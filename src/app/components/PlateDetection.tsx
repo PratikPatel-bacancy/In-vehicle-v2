@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 interface PlateData {
   plate: string;
   state: string;
-  confidence: number;
   timestamp: string;
   status: "normal" | "hotlist" | "warning";
   vehicle?: string;
@@ -108,12 +107,6 @@ export function PlateDetection({ plate, isNew = false }: PlateDetectionProps) {
                 <span>{plate.location}</span>
               </div>
             )}
-            <div className="flex items-center gap-1.5">
-              <span className="uppercase tracking-[.14em] text-[var(--text-3)]">
-                CONF
-              </span>
-              <span>{(plate.confidence * 100).toFixed(1)}%</span>
-            </div>
           </div>
         </div>
 

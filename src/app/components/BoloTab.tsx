@@ -35,7 +35,7 @@ const BOLO_DATA: Bolo[] = [
     reason: "HIT & RUN — School zone. Front bumper damage, cracked headlight R side.",
     area: "Waverly Elementary radius · 1mi",
     expiry: "EOD",
-    source: "CAD #2026-48821",
+    source: "CAD (Computer-Aided Dispatch) #2026-48821",
     timestamp: "13:40:17",
   },
   {
@@ -47,7 +47,7 @@ const BOLO_DATA: Bolo[] = [
     reason: "MISSING JUVENILE · 14yo, last seen on foot near vehicle",
     area: "Countywide — check school zones",
     expiry: "UNTIL NOTICE",
-    source: "NCIC · Missing Persons",
+    source: "NCIC (Natl. Crime Info. Center) · Missing Persons",
     timestamp: "11:22:44",
   },
   {
@@ -69,7 +69,7 @@ export function BoloTab() {
     <div style={{ height: "100%", display: "flex", flexDirection: "column", background: "var(--bg-0)" }}>
       <div style={{ padding: "14px 24px", borderBottom: "1px solid var(--line)", background: "var(--bg-1)", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-1)" }}>BOLOs & Dispatch</span>
+          <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-0)" }}>Watch & Dispatch</span>
           <span style={{ background: "rgba(255,170,0,.1)", border: "1px solid rgba(255,170,0,.3)", color: "var(--amber)", fontFamily: MONO, fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 3 }}>
             {BOLO_DATA.length} ACTIVE
           </span>
@@ -80,7 +80,7 @@ export function BoloTab() {
             transition={{ duration: 1.5, repeat: Infinity }}
             style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--good)" }}
           />
-          <span style={{ fontFamily: MONO, fontSize: 9, color: "var(--text-3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>CAD LIVE</span>
+          <span style={{ fontFamily: MONO, fontSize: 9, color: "var(--text-3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>CAD (Dispatch) · LIVE</span>
         </div>
       </div>
 
@@ -112,7 +112,7 @@ function BoloCard({ bolo }: { bolo: Bolo }) {
           ) : (
             <div style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: "var(--text-3)", marginBottom: 3 }}>[PLATE UNKNOWN]</div>
           )}
-          <div style={{ fontSize: 12, color: "var(--text-1)" }}>{bolo.vehicle}</div>
+          <div style={{ fontSize: 12, color: "var(--text-0)" }}>{bolo.vehicle}</div>
         </div>
         <div style={{ fontFamily: MONO, fontSize: 10, color: "var(--text-3)", flexShrink: 0 }}>{bolo.timestamp}</div>
       </div>
@@ -121,7 +121,7 @@ function BoloCard({ bolo }: { bolo: Bolo }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
         {([
           ["Reason",  bolo.reason,  "var(--text-0)"],
-          ["Area",    bolo.area,    "var(--text-1)"],
+          ["Area",    bolo.area,    "var(--text-0)"],
           ["Expires", bolo.expiry,  expiryUrgent ? "var(--amber)" : "var(--text-2)"],
           ["Source",  bolo.source,  "var(--text-2)"],
         ] as [string, string, string][]).map(([label, value, color]) => (

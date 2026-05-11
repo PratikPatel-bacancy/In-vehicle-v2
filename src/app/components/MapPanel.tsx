@@ -117,7 +117,7 @@ export function MapPanel() {
         <g transform="translate(384,78)">
           <circle cx="0" cy="0" r="5.5" fill="rgba(255,170,0,.1)" stroke="var(--amber)" strokeWidth="1" />
           <circle cx="0" cy="0" r="2.5" fill="var(--amber)" />
-          <text x="0" y="-10" textAnchor="middle" fill="var(--amber)" fontSize="8" fontFamily="Geist Mono, monospace" fontWeight="600">BOLO</text>
+          <text x="0" y="-10" textAnchor="middle" fill="var(--amber)" fontSize="8" fontFamily="Geist Mono, monospace" fontWeight="600">WATCH</text>
         </g>
 
         {/* ── Own unit (center) ─────────────────────────────────────── */}

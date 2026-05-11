@@ -40,7 +40,7 @@ export function DualCameraView() {
                   transition={{ duration: 2, repeat: Infinity }}
                   style={{ width: 8, height: 8, borderRadius: "50%", background: fullscreen === "A" ? "var(--hit)" : "var(--accent)" }}
                 />
-                <span style={{ fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-1)" }}>
+                <span style={{ fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-0)" }}>
                   CAM {fullscreen} · {fullscreen === "A" ? "FRONT" : "REAR"} — FULLSCREEN
                 </span>
               </div>
@@ -63,7 +63,7 @@ export function DualCameraView() {
               {[["FEED","LIVE"],["RESOLUTION","1920 × 1080"],["FRAME RATE","30 FPS"],["STATUS","RECORDING"]].map(([label, value]) => (
                 <div key={label}>
                   <div style={{ fontFamily: MONO, fontSize: 9, textTransform: "uppercase", color: "var(--text-3)", marginBottom: 2 }}>{label}</div>
-                  <div style={{ fontFamily: MONO, fontSize: 11, color: "var(--text-1)" }}>{value}</div>
+                  <div style={{ fontFamily: MONO, fontSize: 11, color: "var(--text-0)" }}>{value}</div>
                 </div>
               ))}
             </div>
@@ -85,8 +85,8 @@ function CameraTileInner({ cameraId, isHit }: { cameraId: "A" | "B"; isHit: bool
   }, []);
 
   const plateData = cameraId === "A"
-    ? { plate: "JLW 8931", state: "TX", confidence: "99.7" }
-    : { plate: "8KAM 415", state: "CA", confidence: "99.1" };
+    ? { plate: "JLW 8931", state: "TX" }
+    : { plate: "8KAM 415", state: "CA" };
 
   const roiColor = isHit ? "var(--hit)" : "var(--accent)";
   const roiGlow  = isHit ? "var(--hit-glow)" : "var(--accent-glow)";
@@ -130,7 +130,7 @@ function CameraTileInner({ cameraId, isHit }: { cameraId: "A" | "B"; isHit: bool
       {/* Camera label */}
       <div className="absolute top-3 left-3 px-2.5 py-1.5 flex items-center gap-2" style={{ background: "rgba(5,7,9,.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,.08)" }}>
         <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background: isHit ? "var(--hit)" : "var(--accent)" }} animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity }} />
-        <span className="font-mono uppercase text-[10px] tracking-[.08em] text-[var(--text-1)]">{label}</span>
+        <span className="font-mono uppercase text-[10px] tracking-[.08em] text-[var(--text-0)]">{label}</span>
       </div>
 
       {/* Bottom badge row */}
@@ -138,11 +138,6 @@ function CameraTileInner({ cameraId, isHit }: { cameraId: "A" | "B"; isHit: bool
         <div className="px-3 py-1.5" style={{ background: "rgba(5,7,9,.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,.08)" }}>
           <span className="font-mono text-[12px] font-semibold tracking-[.02em]" style={{ color: isHit ? "var(--hit)" : "var(--accent)" }}>
             {plateData.plate.replace(" ", "")}{isHit && " · HIT"}
-          </span>
-        </div>
-        <div className="px-3 py-1.5" style={{ background: "rgba(5,7,9,.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,.08)" }}>
-          <span className="font-mono text-[10px]" style={{ color: isHit ? "var(--hit)" : "var(--text-2)" }}>
-            {plateData.confidence}%{isHit && " · HIT"}
           </span>
         </div>
       </div>
@@ -156,7 +151,7 @@ function CameraTile({ cameraId, label, isHit, onClick }: CameraTileProps) {
       <CameraTileInner cameraId={cameraId} isHit={isHit ?? false} />
       <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
         <div className="p-1.5" style={{ background: "rgba(5,7,9,.75)", border: "1px solid rgba(255,255,255,.12)" }}>
-          <Maximize2 size={12} className="text-[var(--text-1)]" />
+          <Maximize2 size={12} className="text-[var(--text-0)]" />
         </div>
       </div>
       <div className="absolute inset-0 border-2 border-transparent group-hover:border-[var(--accent)]/30 transition-all pointer-events-none" />

@@ -6,7 +6,6 @@ interface ActivityRow {
   vehicle: string;
   state: string;
   camera: "A" | "B";
-  confidence: string;
   isHit?: boolean;
 }
 
@@ -17,7 +16,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Silver Ford F-150",
     state: "TX",
     camera: "A",
-    confidence: "99.7",
     isHit: true,
   },
   {
@@ -26,7 +24,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Blue Toyota Camry",
     state: "CA",
     camera: "B",
-    confidence: "99.1",
   },
   {
     time: "14:18:33",
@@ -34,7 +31,6 @@ const activityData: ActivityRow[] = [
     vehicle: "White Chevrolet Silverado",
     state: "TX",
     camera: "A",
-    confidence: "98.4",
   },
   {
     time: "14:15:09",
@@ -42,7 +38,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Red Chevrolet Tahoe",
     state: "TX",
     camera: "B",
-    confidence: "96.8",
   },
   {
     time: "14:12:47",
@@ -50,7 +45,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Blue Nissan Altima",
     state: "OK",
     camera: "A",
-    confidence: "97.2",
   },
   {
     time: "14:09:21",
@@ -58,7 +52,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Gray BMW X5",
     state: "TX",
     camera: "B",
-    confidence: "99.3",
   },
   {
     time: "14:06:55",
@@ -66,7 +59,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Black Mercedes C300",
     state: "TX",
     camera: "A",
-    confidence: "98.7",
   },
   {
     time: "14:03:12",
@@ -74,7 +66,6 @@ const activityData: ActivityRow[] = [
     vehicle: "White Tesla Model 3",
     state: "TX",
     camera: "B",
-    confidence: "99.5",
   },
   {
     time: "14:00:41",
@@ -82,7 +73,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Silver Honda Civic",
     state: "TX",
     camera: "A",
-    confidence: "97.9",
   },
   {
     time: "13:58:17",
@@ -90,7 +80,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Blue Ford Escape",
     state: "NM",
     camera: "B",
-    confidence: "98.1",
   },
   {
     time: "13:55:33",
@@ -98,7 +87,6 @@ const activityData: ActivityRow[] = [
     vehicle: "Black Dodge Ram",
     state: "TX",
     camera: "A",
-    confidence: "96.5",
   },
   {
     time: "13:52:08",
@@ -106,7 +94,6 @@ const activityData: ActivityRow[] = [
     vehicle: "White Hyundai Sonata",
     state: "TX",
     camera: "B",
-    confidence: "99.0",
   },
 ];
 
@@ -120,7 +107,7 @@ export function ActivitySection({ onTriggerHit }: ActivitySectionProps) {
       {/* Section header */}
       <div className="px-4 py-3.5 border-b border-[var(--line)] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-mono uppercase text-[10px] font-semibold text-[var(--text-1)]">
+          <span className="font-mono uppercase text-[10px] font-semibold text-[var(--text-0)]">
             RECENT ACTIVITY
           </span>
           <div className="px-2 py-0.5 rounded-full bg-[var(--bg-3)] text-[var(--accent)] font-mono text-[10px] font-semibold">
@@ -152,7 +139,7 @@ function ActivityRowItem({ row, onTriggerHit }: { row: ActivityRow; onTriggerHit
   return (
     <div
       onClick={onTriggerHit}
-      className={`grid grid-cols-[56px_1fr_48px_52px] gap-3 px-2.5 py-2.5 rounded-md border-l-2 transition-colors cursor-pointer ${
+      className={`grid grid-cols-[56px_1fr_48px] gap-3 px-2.5 py-2.5 rounded-md border-l-2 transition-colors cursor-pointer ${
         row.isHit
           ? "border-l-[var(--hit)] bg-[rgba(255,51,85,.06)] hover:bg-[rgba(255,51,85,.1)]"
           : "border-l-transparent hover:bg-[var(--bg-2)]"
@@ -189,10 +176,6 @@ function ActivityRowItem({ row, onTriggerHit }: { row: ActivityRow; onTriggerHit
         CAM {row.camera}
       </div>
 
-      {/* Confidence column */}
-      <div className="font-mono text-[10px] text-[var(--text-3)] flex items-start">
-        {row.confidence}%
-      </div>
     </div>
   );
 }
