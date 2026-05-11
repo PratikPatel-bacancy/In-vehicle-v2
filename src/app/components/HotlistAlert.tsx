@@ -199,32 +199,41 @@ function CapturedColumn() {
       <ColHeader label="Captured · Live" tag="▶ LIVE FEED" tagColor="accent" />
 
       <div style={{ flex: 1, padding: 20, display: "flex", flexDirection: "column", minHeight: 0 }}>
-        <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
-          <TruckRearSVG />
-          {/* Plate highlight box — positioned over plate in SVG (y=206-260 in 360-tall viewBox = top 57%) */}
+        <div style={{ flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }}>
+          {/* Real camera image */}
+          <img
+            src="/cameras/cam-a-f150.png"
+            alt="Captured vehicle"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+          {/* Vignette */}
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 100%)", pointerEvents: "none" }} />
+          {/* Scan line */}
           <motion.div
-            animate={{ opacity: [1, 0.5, 1], boxShadow: ["0 0 8px rgba(255,51,85,.5)", "0 0 16px rgba(255,51,85,.8)", "0 0 8px rgba(255,51,85,.5)"] }}
+            style={{ position: "absolute", left: 0, right: 0, height: 2, background: "linear-gradient(to right, transparent, var(--hit), transparent)" }}
+            animate={{ top: ["0%", "100%"], opacity: [0, 0.8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          />
+          {/* Plate ROI box */}
+          <motion.div
+            animate={{ opacity: [1, 0.5, 1], boxShadow: ["0 0 8px rgba(255,51,85,.5)", "0 0 20px rgba(255,51,85,.9)", "0 0 8px rgba(255,51,85,.5)"] }}
             transition={{ duration: 1, repeat: Infinity }}
             style={{
-              position: "absolute", top: "57%", left: "50%", transform: "translateX(-50%)",
-              width: "22%", height: "15%",
+              position: "absolute", bottom: "30%", left: "38%",
+              width: "23%", height: "9%",
               border: "2px solid var(--hit)",
               pointerEvents: "none",
             }}
           />
-          {/* Dashed connecting line from highlight box down to callout */}
+          {/* Dashed line down to callout */}
           <div style={{
-            position: "absolute",
-            top: "72%",
-            bottom: "calc(10% + 56px)",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 0,
-            borderLeft: "2px dashed rgba(255,51,85,.55)",
+            position: "absolute", bottom: "calc(18% + 56px)", left: "49.5%",
+            height: "12%", width: 0,
+            borderLeft: "2px dashed rgba(255,51,85,.5)",
             pointerEvents: "none",
           }} />
-          {/* Plate callout — absolute bottom-center of image */}
-          <div style={{ position: "absolute", bottom: "10%", left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
+          {/* Plate callout */}
+          <div style={{ position: "absolute", bottom: "8%", left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
             <PlateCallout plate="JLW 8931" />
           </div>
         </div>
@@ -246,10 +255,37 @@ function HotlistColumn() {
       <ColHeader label="Hotlist Record · Verify" tag="NCIC (Crime DB) · 04/28" tagColor="hit" />
 
       <div style={{ flex: 1, padding: 20, display: "flex", flexDirection: "column", minHeight: 0 }}>
-        <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
-          <TruckSideSVG />
-          {/* Plate callout — absolute bottom-center */}
-          <div style={{ position: "absolute", bottom: "10%", left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
+        <div style={{ flex: 1, position: "relative", minHeight: 0, overflow: "hidden" }}>
+          {/* Real camera image — same vehicle, shown as NCIC record reference */}
+          <img
+            src="/cameras/cam-a-f150.png"
+            alt="NCIC record vehicle"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "saturate(0.7) brightness(0.85)" }}
+          />
+          {/* Vignette */}
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 100%)", pointerEvents: "none" }} />
+          {/* NCIC record watermark */}
+          <div style={{
+            position: "absolute", top: 10, right: 10,
+            fontFamily: MONO, fontSize: 8, color: "rgba(255,255,255,.45)",
+            background: "rgba(5,7,9,.6)", padding: "3px 7px",
+          }}>
+            NCIC · 04/28/2026 · RECORD PHOTO
+          </div>
+          {/* Plate ROI — amber for record match */}
+          <motion.div
+            animate={{ opacity: [1, 0.6, 1] }}
+            transition={{ duration: 1.4, repeat: Infinity }}
+            style={{
+              position: "absolute", bottom: "30%", left: "38%",
+              width: "23%", height: "9%",
+              border: "2px solid var(--good)",
+              boxShadow: "0 0 12px rgba(43,217,124,.5)",
+              pointerEvents: "none",
+            }}
+          />
+          {/* Plate callout */}
+          <div style={{ position: "absolute", bottom: "8%", left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
             <PlateCallout plate="JLW 8931" />
           </div>
         </div>
@@ -403,21 +439,30 @@ function PIPCamera() {
         zIndex: 20,
       }}
     >
-      <div style={{ width: "100%", height: "100%", background: "var(--bg-2)", position: "relative" }}>
-        <TruckPIPSVG />
-
+      <div style={{ width: "100%", height: "100%", position: "relative" }}>
+        {/* Real tracking image */}
+        <img
+          src="/cameras/cam-a-f150.png"
+          alt="PIP tracking camera"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+        {/* Vignette */}
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%)", pointerEvents: "none" }} />
+        {/* Scanlines overlay */}
+        {[0,1,2,3,4].map((i) => (
+          <div key={i} style={{ position: "absolute", left: 0, right: 0, height: 1, top: i * 26, background: "rgba(0,229,212,.05)", pointerEvents: "none" }} />
+        ))}
         {/* Plate ROI — pulsing */}
         <motion.div
           animate={{ opacity: [1, 0.3, 1], boxShadow: ["0 0 6px rgba(255,51,85,.6)", "0 0 12px rgba(255,51,85,.9)", "0 0 6px rgba(255,51,85,.6)"] }}
           transition={{ duration: 0.8, repeat: Infinity }}
           style={{
-            position: "absolute", bottom: "28%", left: "50%", transform: "translateX(-50%)",
-            width: 52, height: 16,
+            position: "absolute", bottom: "32%", left: "38%",
+            width: "23%", height: "10%",
             border: "1px solid var(--hit)",
             pointerEvents: "none",
           }}
         />
-
         {/* Label */}
         <div style={{ position: "absolute", top: 6, left: 8, display: "flex", alignItems: "center", gap: 4 }}>
           <motion.div
@@ -425,7 +470,7 @@ function PIPCamera() {
             transition={{ duration: 0.6, repeat: Infinity }}
             style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--hit)" }}
           />
-          <span style={{ fontFamily: MONO, fontSize: 9, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-0)" }}>
+          <span style={{ fontFamily: MONO, fontSize: 9, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-0)", background: "rgba(5,7,9,.6)", padding: "1px 4px" }}>
             TRACKING · CAM A
           </span>
         </div>
@@ -478,22 +523,31 @@ function ConfirmedOverlay({ plate, onDismiss }: { plate: string; onDismiss: () =
           NCIC (Natl. Crime Info. Center) <b style={{ color: "var(--accent)" }}>STLN (Stolen)</b>
         </div>
 
-        {/* Image 5: Body-cam thumbnail */}
+        {/* Body-cam thumbnail using real image */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
-          style={{ alignSelf: "stretch", border: "1px solid var(--line-2)", overflow: "hidden", position: "relative" }}
+          style={{ alignSelf: "stretch", border: "1px solid var(--line-2)", overflow: "hidden", position: "relative", height: 110 }}
         >
-          <BodyCamSVG />
+          <img
+            src="/cameras/cam-a-f150.png"
+            alt="Body cam"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "brightness(0.8)" }}
+          />
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)", pointerEvents: "none" }} />
+          {/* Scanlines */}
+          {[0,1,2,3].map((i) => (
+            <div key={i} style={{ position: "absolute", left: 0, right: 0, height: 1, top: i * 28, background: "rgba(0,229,212,.05)", pointerEvents: "none" }} />
+          ))}
           <div style={{ position: "absolute", top: 6, left: 8, display: "flex", alignItems: "center", gap: 5 }}>
             <motion.div
               animate={{ opacity: [1, 0.1, 1] }}
               transition={{ duration: 0.6, repeat: Infinity }}
               style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--hit)" }}
             />
-            <span style={{ fontFamily: MONO, fontSize: 8, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-0)" }}>
-              BODY CAM · UNIT 01
+            <span style={{ fontFamily: MONO, fontSize: 8, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-0)", background: "rgba(5,7,9,.65)", padding: "1px 5px" }}>
+              BWC (Body-Worn Camera) · UNIT 01
             </span>
           </div>
           <div style={{ position: "absolute", bottom: 5, right: 8, fontFamily: MONO, fontSize: 8, color: "rgba(255,255,255,.45)" }}>
@@ -712,52 +766,7 @@ function SecondaryBtn({ label, full, onClick }: { label: string; full?: boolean;
   );
 }
 
-/* ─── IMAGE 5: Body-cam SVG thumbnail ───────────────────────────────── */
-
-function BodyCamSVG() {
-  return (
-    <svg width="100%" height="80" viewBox="0 0 460 80" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-      <defs>
-        <linearGradient id="bcSky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#507090" />
-          <stop offset="100%" stopColor="#6a8aa4" />
-        </linearGradient>
-        <linearGradient id="bcGnd" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#303840" />
-          <stop offset="100%" stopColor="#1c2228" />
-        </linearGradient>
-      </defs>
-      {/* Background — chest-mount POV, slightly fisheye-wide */}
-      <rect width="460" height="80" fill="url(#bcSky)" />
-      <rect y="44" width="460" height="36" fill="url(#bcGnd)" />
-      <line x1="0" y1="44" x2="460" y2="44" stroke="rgba(255,255,255,.08)" strokeWidth="1" />
-      {/* Road markings */}
-      <path d="M 210,80 L 218,44 L 242,44 L 250,80 Z" fill="rgba(255,255,255,.06)" />
-      {/* Distant F-150 */}
-      <rect x="185" y="24" width="90" height="28" rx="3" fill="#bbb" />
-      <rect x="193" y="18" width="74" height="12" rx="2" fill="#c4c4c4" />
-      <rect x="185" y="38" width="90" height="14" rx="1" fill="#a8aaac" />
-      {/* Taillights */}
-      <rect x="187" y="26" width="14" height="20" rx="2" fill="#dd1122" opacity="0.9" />
-      <rect x="261" y="26" width="14" height="20" rx="2" fill="#dd1122" opacity="0.9" />
-      {/* License plate tiny */}
-      <rect x="213" y="40" width="34" height="10" rx="1" fill="#f0ead8" />
-      <text x="230" y="48" textAnchor="middle" fill="#111" fontSize="5.5" fontFamily="monospace" fontWeight="700" letterSpacing="1">JLW 8931</text>
-      {/* Officer hands / radio (lower frame) */}
-      <path d="M 0,80 Q 60,58 130,72 L 130,80 Z" fill="#2c3038" opacity="0.7" />
-      <path d="M 460,80 Q 400,58 330,72 L 330,80 Z" fill="#2c3038" opacity="0.7" />
-      {/* Radio outline */}
-      <rect x="196" y="62" width="28" height="16" rx="3" fill="#1e242c" stroke="rgba(255,255,255,.12)" strokeWidth="1" />
-      <rect x="200" y="66" width="20" height="3" rx="1" fill="rgba(255,255,255,.15)" />
-      {/* Scan-line overlay — subtle body-cam CCD artifact */}
-      {[0, 1, 2, 3].map((i) => (
-        <rect key={i} x="0" y={i * 20} width="460" height="1" fill="rgba(0,229,212,.04)" />
-      ))}
-    </svg>
-  );
-}
-
-/* ─── SVG ILLUSTRATIONS ──────────────────────────────────────────────── */
+/* ─── SVG ILLUSTRATIONS (unused — replaced by real images) ──────────── */
 
 function TruckRearSVG() {
   return (
